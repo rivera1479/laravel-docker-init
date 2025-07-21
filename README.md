@@ -18,12 +18,84 @@ Ideal para comenzar nuevos proyectos Laravel de forma rápida, segura y escalabl
 
 ## Instalación y Configuración
 
-1. **Clona el repositorio:**
+### 1. Clona el repositorio y cambia la conexión al nuevo repo
 
-   ```sh
-   git clone https://github.com/tu-usuario/laravel-docker-init.git
-   cd laravel-docker-init
-   ```
+```sh
+git clone https://github.com/tu-usuario/laravel-docker-init.git
+cd laravel-docker-init
+```
+
+Si vas a usar tu propio repositorio, cambia la URL del origin a HTTPS (reemplaza TU_TOKEN y TU_USUARIO):
+
+```sh
+git remote set-url origin https://TU_USUARIO:TU_TOKEN@github.com/rivera1479/api-ejemplo-nombre-laravel.git
+```
+
+---
+
+### 2. Configura Docker para una instancia diferente
+
+Para tener varias instancias independientes (por ejemplo, una API llamada "ejemplo-nombre"), **modifica los nombres de los contenedores, puertos y volúmenes** en tu archivo `docker-compose.yml` para evitar conflictos y facilitar la identificación:
+
+```yaml
+services:
+  app:
+    container_name: ejemplo-nombre-app
+    # ...resto de la configuración...
+
+  webserver:
+    container_name: ejemplo-nombre-webserver
+    ports:
+      - "8020:80" # Cambia el puerto externo si lo necesitas
+    # ...resto de la configuración...
+
+  db:
+    container_name: ejemplo-nombre-db
+    volumes:
+      - ejemplo_nombre_dbdata:/var/lib/mysql
+    ports:
+      - "3310:3306" # Cambia el puerto externo si lo necesitas
+    environment:
+      MYSQL_DATABASE: ejemplo_nombre
+      MYSQL_USER: ejemplo_nombre_user
+      MYSQL_PASSWORD: ejemplo_nombre_secret
+      MYSQL_ROOT_PASSWORD: ejemplo_nombre_root
+    # ...resto de la configuración...
+
+  redis:
+    container_name: ejemplo-nombre-redis
+    ports:
+      - "6380:6379" # Cambia el puerto externo si lo necesitas
+    # ...resto de la configuración...
+
+volumes:
+  ejemplo_nombre_dbdata:
+    driver: local
+```
+
+**Importante:**  
+- Cambia los nombres de los contenedores y volúmenes para que sean únicos por proyecto.
+- Cambia los puertos externos si vas a correr varias instancias en la misma máquina.
+- Personaliza las variables de entorno de la base de datos para cada instancia.
+
+---
+
+### 3. Configura los datos de conexión de la base de datos
+
+Edita el archivo `src/.env` para que coincida con la configuración de tu base de datos en Docker:
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=db
+DB_PORT=3306
+DB_DATABASE=ejemplo_nombre
+DB_USERNAME=ejemplo_nombre_user
+DB_PASSWORD=ejemplo_nombre_secret
+```
+
+---
+
+### 4. Resto de pasos de instalación
 
 2. **Copia el archivo de entorno:**
 
