@@ -32,4 +32,41 @@ class LoginController extends Controller
             'user'         => $user,
         ]);
     }
+
+    public function logout(Request $request)
+    {
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+        $user->tokens()->delete();
+
+        return response()->json([
+            'message' => 'Sesión cerrada correctamente.'
+        ]);
+    }
+
+    public function register(Request $request)
+    {
+        $request->validate([
+            'name'     => 'required|string|max:255',
+            'email'    => 'required|email|unique:users,email',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        $user = User::create([
+            'name'     => $request->name,
+            'email'    => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+
+        return response()->json($user, 201);
+    }
+
+    public function profile(Request $request)
+    {
+        $user = Auth::user();
+
+        return response()->json([
+            'user' => $user,
+        ]);
+    }
 }
