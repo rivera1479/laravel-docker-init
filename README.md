@@ -11,8 +11,8 @@ Ideal para comenzar nuevos proyectos Laravel de forma rápida, segura y escalabl
 ## Requisitos
 
 - [Docker](https://docs.docker.com/get-docker/) y [Docker Compose](https://docs.docker.com/compose/install/) instalados en tu sistema.
+- [Git](https://git-scm.com/) para clonar el repositorio.
 - (Opcional) [Postman](https://www.postman.com/downloads/) para probar las rutas de la API.
-- (Opcional) [Git](https://git-scm.com/) para clonar el repositorio.
 
 ---
 
@@ -143,13 +143,20 @@ Puedes probarlos fácilmente usando [Postman](https://www.postman.com/downloads/
 
 ### Endpoints principales
 
-- `POST /auth` — Login de usuario
-- `POST /register` — Registro de usuario
-- `POST /logout` — Cerrar sesión (requiere token)
-- `GET /profile` — Perfil del usuario autenticado
-- `GET /` — Listar usuarios (requiere token)
-- `POST /` — Crear usuario (requiere token)
-- `PUT /` — Actualizar usuario (requiere token)
+> Todas las rutas están bajo el prefijo `/api/users`:
+
+- `POST   /api/users/auth` — Login de usuario
+- `POST   /api/users/register` — Registro de usuario
+- `POST   /api/users/logout` — Cerrar sesión (requiere token)
+- `GET    /api/users/profile` — Perfil del usuario autenticado
+- `GET    /api/users` — Listar usuarios (requiere token)
+- `POST   /api/users` — Crear usuario (requiere token)
+- `PUT    /api/users` — Actualizar usuario (requiere token)
+
+Otras rutas útiles:
+- `GET /sanctum/csrf-cookie` — Para obtener el CSRF cookie si usas autenticación SPA.
+- `GET /storage/{path}` — Acceso a archivos públicos.
+- `GET /up` — Endpoint de salud del servidor.
 
 ### Colección Postman
 
